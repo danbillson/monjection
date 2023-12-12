@@ -1,4 +1,5 @@
 import { Monster } from "@/components/monster";
+import { Navigation } from "@/components/navigation";
 import { AxiosClient } from "@/lib/http";
 import { ConsoleLogger } from "@/lib/logger";
 import { DigimonService } from "@/lib/monster";
@@ -14,11 +15,8 @@ function getMonster(id: number) {
   return monsterService.get(id);
 }
 
-export default async function Home({
-  params: { id },
-}: {
-  params: { id: number };
-}) {
+export default async function Home({ params }: { params: { id: string } }) {
+  const id = Number(params.id);
   const monster = await getMonster(id);
 
   if (!monster) notFound();
@@ -26,6 +24,7 @@ export default async function Home({
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       <Monster monster={monster} />
+      <Navigation prev={`/digimon/${id - 1}`} next={`/digimon/${id + 1}`} />
     </main>
   );
 }
