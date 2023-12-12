@@ -1,14 +1,14 @@
 import { Monster } from "@/components/monster";
-import { FetchClient } from "@/lib/http";
+import { AxiosClient } from "@/lib/http";
 import { ConsoleLogger } from "@/lib/logger";
-import { PokemonService } from "@/lib/monster";
+import { DigimonService } from "@/lib/monster";
 import { notFound } from "next/navigation";
 import { container } from "tsyringe";
 
 container.register("Logger", { useClass: ConsoleLogger });
-container.register("HTTPClient", { useClass: FetchClient });
+container.register("HTTPClient", { useClass: AxiosClient });
 
-const monsterService = container.resolve(PokemonService);
+const monsterService = container.resolve(DigimonService);
 
 function getMonster(id: number) {
   return monsterService.get(id);
