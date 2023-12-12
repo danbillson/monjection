@@ -8,12 +8,16 @@ container.register("HTTPClient", { useClass: FetchClient });
 
 const monsterService = container.resolve(PokemonService);
 
-function getMonster() {
-  return monsterService.get(25);
+function getMonster(id: number) {
+  return monsterService.get(id);
 }
 
-export default async function Home() {
-  const monster = await getMonster();
+export default async function Home({
+  params: { id },
+}: {
+  params: { id: number };
+}) {
+  const monster = await getMonster(id);
 
   if (!monster) notFound();
 
