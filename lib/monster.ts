@@ -44,6 +44,30 @@ export class PokemonService implements MonsterService {
   }
 }
 
+const mockPokemon = [
+  { id: 1, name: "Bulbasaur" },
+  { id: 4, name: "Charmander" },
+  { id: 7, name: "Squirtle" },
+];
+
+export class MockPokemonService implements MonsterService {
+  async get(id: number): Promise<Monster | null> {
+    const pokemon = mockPokemon[id % mockPokemon.length];
+    return id === 25
+      ? {
+          id,
+          name: "Pikachu",
+          sprite:
+            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png",
+        }
+      : {
+          id,
+          name: pokemon.name,
+          sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png`,
+        };
+  }
+}
+
 type Digimon = {
   id: number;
   name: string;

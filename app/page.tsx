@@ -2,14 +2,15 @@ import { Monster } from "@/components/monster";
 import { Navigation } from "@/components/navigation";
 import { FetchClient } from "@/lib/http";
 import { ConsoleLogger } from "@/lib/logger";
-import { PokemonService } from "@/lib/monster";
+import { PokemonService, MockPokemonService } from "@/lib/monster";
 import { notFound } from "next/navigation";
 import { container } from "tsyringe";
 
 container.register("Logger", { useClass: ConsoleLogger });
 container.register("HTTPClient", { useClass: FetchClient });
 
-const monsterService = container.resolve(PokemonService);
+const pokemonService = process.env.DEBUG ? MockPokemonService : PokemonService;
+const monsterService = container.resolve(pokemonService);
 
 function getMonster() {
   return monsterService.get(25);
