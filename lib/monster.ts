@@ -52,6 +52,10 @@ const mockPokemon = [
 
 export class MockPokemonService implements MonsterService {
   async get(id: number): Promise<Monster | null> {
+    if (isNaN(id) || id < 1 || id > 1023) {
+      return null;
+    }
+
     const pokemon = mockPokemon[id % mockPokemon.length];
     return id === 25
       ? {

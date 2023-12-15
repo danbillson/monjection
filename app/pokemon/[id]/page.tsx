@@ -9,7 +9,10 @@ import { container } from "tsyringe";
 container.register("Logger", { useClass: ConsoleLogger });
 container.register("HTTPClient", { useClass: FetchClient });
 
-const pokemonService = process.env.DEBUG ? MockPokemonService : PokemonService;
+const pokemonService =
+  process.env.DEBUG || process.env.NODE_ENV === "test"
+    ? MockPokemonService
+    : PokemonService;
 const monsterService = container.resolve(pokemonService);
 
 function getMonster(id: number) {
